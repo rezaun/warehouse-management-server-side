@@ -37,6 +37,23 @@ async function run(){
             res.send(product);
 
         });
+        //update Quantity
+        app.put('/updatequantity/:id', async (req, res) => {
+            const id = req.params.id;
+            //console.log(id);
+            // const updateDoc = req.body;
+            const query = { _id: ObjectId(id) };
+            const options = { upsert: true };
+
+            const updateDoc = {
+                $set: {
+                    quantity: req.body.addedQuantity
+                },
+            };
+            const result = await productCollection.updateOne(query, updateDoc, options);
+            res.send(result);
+        })
+
 
         //POST
         app.post('/product', async(req, res) =>{
